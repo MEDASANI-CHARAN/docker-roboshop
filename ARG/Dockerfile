@@ -6,5 +6,6 @@ ENV COURSE="DevOps" \
 ARG SUBJECT="DevOps-with-AWS" \
     AREA="ITPL" \
     TIME="150HRS" 
+ENV AREA=${AREA}
 RUN echo "Hi, course is:${COURSE}}, time is:${TIME}, place is:${PLACE}}"
 CMD ["sleep", "1000"]
