@@ -1,0 +1,70 @@
+networks:
+  default:
+    driver: bridge
+    name: roboshop
+    external: true # I created network already using docker
+services:
+  mongodb:
+    image: charan466/mongodb:v1
+    container_name: mongodb
+  catalogue:
+    image: charan466/catalogue:v1
+    container_name: catalogue
+    depends_on:
+      - mongodb
+  redis:
+    image: charan466/redis:v1
+    container_name: redis
+  user:
+    image: charan466/user:v1
+    container_name: user
+    depends_on:
+      - redis
+      - mongodb
+  cart:
+    image: charan466/cart:v1
+    container_name: cart
+    depends_on:
+      - catalogue
+      - redis
+  mysql:
+    image: charan466/mysql:v1
+    container_name: mysql
+  shipping:
+    image: charan466/shipping:v1
+    container_name: shipping
+    depends_on:
+      - mysql
+      - cart
+  rabbitmq:
+    image: charan466/rabbitmq:v1 # image: rabbitmq:3 => we can pull the image directly from docker hub
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop123
+  payment:
+    image: charan466/payment:v1
+    container_name: payment
+    environment:
+      CART_HOST: cart
+      CART_PORT: "8080"
+      USER_HOST: user
+      USER_PORT: "8080"
+      AMQP_HOST: rabbitmq
+      AMQP_PORT: "8080"
+      AMQP_USER: roboshop
+      AMQP_PASS: roboshop123
+    depends_on:
+      - rabbitmq
+      - cart  
+  frontend:
+    image: charan466/frontend:v1
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - catalogue
+      - user
+      - cart
+      - shipping
+      - payment
