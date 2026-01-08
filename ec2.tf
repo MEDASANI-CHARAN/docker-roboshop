@@ -12,7 +12,7 @@ resource "aws_instance" "docker" {
    root_block_device {
     volume_size = 60
     volume_type = "gp3" # or "gp2", depending on your preference
-  }                      
+  }                        
 
   tags = {
     Name = each.key
