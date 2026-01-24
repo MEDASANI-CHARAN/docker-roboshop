@@ -17,7 +17,7 @@ resource "aws_instance" "docker" {
   tags = {
     Name = each.key
     }  
-}            
+}                  
              
 resource "aws_security_group" "allow_everything" {
   name        = var.sg_name
