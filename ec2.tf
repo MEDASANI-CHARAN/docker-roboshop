@@ -13,7 +13,7 @@ resource "aws_instance" "docker" {
     volume_size = 60
     volume_type = "gp3" # or "gp2", depending on your preference
   }                              
-                                 
+
   tags = {
     Name = each.key
     }  
