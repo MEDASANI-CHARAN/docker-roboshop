@@ -6,7 +6,7 @@ resource "aws_instance" "docker" {
   # instance_type = each.value
   instance_type = "t3.micro"
   user_data = file("docker.sh")                                         
-                                                     
+                                                         
   vpc_security_group_ids = [aws_security_group.allow_everything.id]
                        
    root_block_device {
