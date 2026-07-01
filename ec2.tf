@@ -8,7 +8,7 @@ resource "aws_instance" "docker" {
   user_data = file("docker.sh")                                         
                                                                         
   vpc_security_group_ids = [aws_security_group.allow_everything.id]
-                                                                   
+                                                                               
    root_block_device {
     volume_size = 60
     volume_type = "gp3" # or "gp2", depending on your preference
