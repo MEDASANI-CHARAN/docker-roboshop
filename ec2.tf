@@ -18,7 +18,7 @@ resource "aws_instance" "docker" {
     Name = each.key
     }  
 }                                                                                
-             
+
 resource "aws_security_group" "allow_everything" {
   name        = var.sg_name
   description = var.sg_description
